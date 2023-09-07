@@ -1,0 +1,40 @@
+<html>
+<head>
+</head>
+<body>
+
+<input type="file" id="file">
+<button id="btn">확인</button>
+
+
+<script>
+const file = document.querySelector('#file');
+const btn = document.querySelector('#btn');
+
+    //찬영
+    let fileData;
+    let readFile = (file) => new Promise(async  (resolve, reject) => {
+        let reader = new FileReader();
+        reader.onload = async (e) => await resolve(reader.result);
+        
+        let blob = new Blob(['\ufeff' + file], { type: "text/csv;charset=utf-8" });
+        await reader.readAsText(file, blob);
+    });
+
+file.onchange = async e => {
+    fileData = event.target.files[0];
+
+    console.log(await readFile(fileData));
+}
+
+btn.onclick = async e => {
+if (!fileData) {
+    alert('파일선택하셈');
+    return;
+}
+    console.log(await readFile(fileData));
+}
+</script>
+</body>
+
+</html>

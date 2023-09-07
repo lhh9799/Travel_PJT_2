@@ -1,10 +1,10 @@
 submitButtonElement = document.querySelector('#submitButton');
-submitButtonElement.addEventListener('click', (event) => {
+submitButtonElement.addEventListener('click', async (event) => {
     console.log(event);
     let file = event.target.files[0];
     console.log(file);
 
-    let readFile = (file) => new Promise( (resolve, reject) => {
+    let readFile = async (file) => new Promise( (resolve, reject) => {
         let reader = new FileReader();
         reader.onload = (e) => resolve(reader.result);
 
@@ -14,7 +14,7 @@ submitButtonElement.addEventListener('click', (event) => {
         reader.readAsText(file);
     });
 
-    let csvText = readFile(file);
+    let csvText = await readFile(file);
     console.log(csvText);
     alert('실행됨');
 });
